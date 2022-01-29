@@ -1,0 +1,35 @@
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  .nav-line {
+    transition: all 300ms ease-in-out;
+  }
+}
+
+.toggle .line-1 {
+  transform: rotate(-45deg) translate(-8px, 6px);
+}
+
+.toggle .line-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.toggle .line-3 {
+  transform: rotate(45deg) translate(-8px, -6px);
+}
+
+@media (max-width: 768px) {
+  nav {
+    .nav-links {
+      transform: translateY(-110%);
+      transition: transform 300ms ease-in-out;
+    }
+
+    .nav-mobile-active {
+      transform: translateY(0);
+    }
+  }
+}
