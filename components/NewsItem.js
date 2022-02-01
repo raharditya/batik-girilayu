@@ -13,7 +13,7 @@ export default function NewsItem(props) {
       spacing="4"
     >
       <Box>
-        <Heading as="h2" fontSize="xl" color="blue.600" mt="0" mb="2">
+        <Heading as="h2" fontSize={{ base: 'lg', lg: 'xl' }} color="blue.600" mt="0" mb="2">
           {props.title}
         </Heading>
         <Text>{props.excerpt}</Text>

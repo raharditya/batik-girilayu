@@ -11,10 +11,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxW="container.xl" color="gray.700">
+      <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
         <Box as="main">
           <Box bg="gray.300" w="full" h="250px" />
-          <Heading as="h1" fontSize="2xl" mt="6" mb="4">
+          <Heading as="h1" fontSize={{ base: 'xl', lg: '2xl' }} mt="6" mb="4">
             Berita Terbaru
           </Heading>
 

@@ -20,6 +20,7 @@ export default function Nav() {
             position={{ base: 'absolute', md: 'relative' }}
             direction={{ base: 'column', md: 'row' }}
             height={{ base: 'calc(100vh - 70px)', md: 'auto' }}
+            fontSize={{ base: 'xl', lg: 'md' }}
             top={{ base: '70px', md: 'auto' }}
             left={{ base: '0px', md: 'auto' }}
             right={{ base: '0px', md: 'auto' }}
@@ -51,6 +52,7 @@ export default function Nav() {
             onClick={toggleNav}
             pos="relative"
             zIndex="20"
+            cursor="pointer"
           >
             <Box w="8" h="1.5" rounded="full" bg="blue.300" className="nav-line line-1"></Box>
             <Box w="8" h="1.5" rounded="full" bg="blue.300" className="nav-line line-2"></Box>

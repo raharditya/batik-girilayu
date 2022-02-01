@@ -6,7 +6,7 @@ export default function GalleryItem(props) {
     <Stack w="full" direction="column" bg="white" spacing="4" mb="4" p="4" rounded="xl" shadow="xl">
       <Box bg="gray.300" h="200px" flexShrink="0" rounded="lg"></Box>
       <Box>
-        <Heading as="h2" fontSize="xl" color="blue.600">
+        <Heading as="h2" fontSize={{ base: 'lg', lg: 'xl' }} color="blue.600">
           {props.title}
         </Heading>
         <Text>{props.description}</Text>

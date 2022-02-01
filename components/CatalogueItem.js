@@ -7,7 +7,7 @@ export default function CatalogueItem(props) {
       <Box bg="gray.300" w="100px" h="100px" flexShrink="0" rounded="lg"></Box>
       <VStack justifyContent="space-between" alignItems="start">
         <Box>
-          <Heading as="h2" fontSize="xl" color="blue.600">
+          <Heading as="h2" fontSize={{ base: 'lg', lg: 'xl' }} color="blue.600">
             {props.title}
           </Heading>
           <Text>{props.children}</Text>

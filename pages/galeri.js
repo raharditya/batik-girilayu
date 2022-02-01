@@ -12,7 +12,7 @@ export default function GaleriPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxW="container.xl" color="gray.700">
+      <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
         <Box as="main">
           <Stack direction={{ base: 'column', md: 'row' }} spacing="6">
             <Box
