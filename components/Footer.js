@@ -28,7 +28,7 @@ export const Footer = ({ homeUrl = '/', brand, question, navItems, socialMedia, 
           standard dummy text ever since the 1500s.
         </Text>
 
-        <Text fontWeight="bold" fontSize="lg" mb="1">
+        <Text fontWeight="bold" fontSize={{ base: 'md', lg: 'lg' }} mb="1">
           Kontak Kami
         </Text>
         <HStack spacing="4">
