@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Box, Container, Stack, VStack } from '@chakra-ui/layout';
 import { NavLink } from './NavLink';
+import { Image } from '@chakra-ui/image';
+import Link from 'next/link';
 
 export default function Nav() {
   const [isOpen, setOpen] = useState(false);
@@ -13,7 +15,11 @@ export default function Nav() {
     <Box as="nav" bg="white" shadow="xl">
       <Container maxW="container.xl">
         <Stack direction="row" h="70px" justifyContent="space-between" alignItems="center">
-          <Box h="12" w="200px" bg="gray.300" pos="relative" zIndex="20" />
+          <Link href="/" passHref>
+            <Box as="a">
+              <Image src="/assets/logo.png" height="12" pos="relative" zIndex="20" />
+            </Box>
+          </Link>
 
           <Stack
             bg={{ base: 'white', md: '' }}
@@ -34,7 +40,7 @@ export default function Nav() {
             <NavLink href="/" exact onClick={() => isOpen && setOpen(false)}>
               Beranda
             </NavLink>
-            <NavLink href="/katalog" exact onClick={() => isOpen && setOpen(false)}>
+            <NavLink href="/katalog" onClick={() => isOpen && setOpen(false)}>
               Katalog
             </NavLink>
             <NavLink href="/galeri" exact onClick={() => isOpen && setOpen(false)}>

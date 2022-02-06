@@ -1,5 +1,5 @@
 import { Stack, Text } from '@chakra-ui/react';
-import { Box, Container, Heading } from '@chakra-ui/layout';
+import { Box, Center, Container, Heading } from '@chakra-ui/layout';
 import Head from 'next/head';
 
 export default function AboutPage() {
@@ -13,14 +13,35 @@ export default function AboutPage() {
 
       <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
         <Box as="main">
-          <Box bg="gray.300" w="full" h="250px" rounded="xl" />
+          <Center
+            bg="gray.300"
+            w="full"
+            h="250px"
+            rounded="xl"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            backgroundImage="url('/assets/dark/asset-2.jpg')"
+          >
+            <Heading color="white" fontSize="4xl">
+              Tentang Kami
+            </Heading>
+          </Center>
 
           <Box bg="white" rounded="xl" border="1px" borderColor="gray.200" p="4" mt="6" shadow="xl">
             <Stack direction={{ base: 'column', md: 'row' }} spacing="4" mb="6">
-              <Box bg="gray.300" w={{ base: 'full', md: '30%' }} h="250px" rounded="lg" flexShrink="0"></Box>
+              <Box
+                bg="gray.300"
+                w={{ base: 'full', md: '30%' }}
+                h="250px"
+                rounded="lg"
+                flexShrink="0"
+                backgroundPosition="center"
+                backgroundSize="cover"
+                backgroundImage="url('/assets/konten-2.jpg')"
+              ></Box>
               <Box>
-                <Heading as="h2" fontSize="xl" color="blue.600" mb="2">
-                  Batik Entah Apa Namanya
+                <Heading as="h2" fontSize="xl" color="#c28e35" mb="2">
+                  Sub judul deskripsi 1
                 </Heading>
                 <Text mb="4">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -45,8 +66,8 @@ export default function AboutPage() {
 
             <Stack direction={{ base: 'column-reverse', md: 'row' }} spacing="4">
               <Box>
-                <Heading as="h2" fontSize="xl" color="blue.600" mb="2">
-                  Batik Entah Apa Namanya
+                <Heading as="h2" fontSize="xl" color="#c28e35" mb="2">
+                  Sub judul deskripsi 2
                 </Heading>
                 <Text mb="4">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -67,7 +88,16 @@ export default function AboutPage() {
                   Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
                 </Text>
               </Box>
-              <Box bg="gray.300" w={{ base: 'full', md: '30%' }} h="250px" rounded="lg" flexShrink="0"></Box>
+              <Box
+                bg="gray.300"
+                w={{ base: 'full', md: '30%' }}
+                h="250px"
+                rounded="lg"
+                flexShrink="0"
+                backgroundPosition="center"
+                backgroundSize="cover"
+                backgroundImage="url('/assets/konten-1.jpg')"
+              ></Box>
             </Stack>
           </Box>
         </Box>

@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Box, Container, Heading } from "@chakra-ui/layout";
-import Head from "next/head";
-import NewsItem from "../components/NewsItem";
-import { firestore } from "../firebase";
-// import { useCollection } from "react-firebase-hooks/firestore";
+import { useState, useEffect } from 'react';
+import { Box, Text, Container, Heading, Center } from '@chakra-ui/layout';
+import Head from 'next/head';
+import NewsItem from '../components/NewsItem';
+import { firestore } from '../firebase';
+import { TailSpin } from 'react-loader-spinner';
 
 export default function Home() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const colRef = firestore.collection("berita");
+    const colRef = firestore.collection('berita').orderBy('tanggal', 'desc');
 
     colRef.get().then((snapshot) => {
       const _news = [];
@@ -22,31 +22,46 @@ export default function Home() {
   }, []);
 
   return (
-    <Box bg="gray.50" minH="100vh" py="6">
+    <Box bg="gray.50" py="6">
       <Head>
         <title>Batik Girilayu</title>
         <meta name="description" content="Website resmi dari Batik Girilayu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxW="container.xl" color="gray.700" fontSize={{ base: "sm", lg: "md" }}>
+      <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
         <Box as="main">
-          <Box bg="gray.300" w="full" h="250px" />
-          <Heading as="h1" fontSize={{ base: "xl", lg: "2xl" }} mt="6" mb="4">
+          <Box
+            bg="gray.300"
+            w="full"
+            h="300px"
+            rounded="xl"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            backgroundImage="url('/assets/main-header.jpg')"
+          />
+          <Heading as="h1" fontSize={{ base: 'xl', lg: '2xl' }} mt="6" mb="4">
             Berita Terbaru
           </Heading>
 
-          {news.map((newsItem) => (
-            <NewsItem
-              title={newsItem.judul}
-              path={newsItem.slug}
-              thumbnail={newsItem.gambarUrl}
-              excerpt="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-          typesetting, remaining essentially unchanged."
-            />
-          ))}
+          {news.length ? (
+            news.map((newsItem, idx) => (
+              <NewsItem
+                key={idx * 100}
+                title={newsItem.judul}
+                path={newsItem.slug}
+                thumbnail={newsItem.gambarUrl}
+                excerpt={newsItem.intisari}
+              />
+            ))
+          ) : (
+            <Center py="14">
+              <Box textAlign="center">
+                <TailSpin color="#00BFFF" height={80} width={80} />
+                <Text mt="4">Loading...</Text>
+              </Box>
+            </Center>
+          )}
         </Box>
       </Container>
 
