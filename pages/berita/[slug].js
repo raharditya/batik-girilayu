@@ -1,10 +1,30 @@
-import { Box, Center, Container, Heading, Text, VStack } from '@chakra-ui/layout';
-import ReactMarkdown from 'react-markdown';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import { Box, Center, Container, Heading, Text, VStack } from "@chakra-ui/layout";
+import ReactMarkdown from "react-markdown";
+import { useRouter } from "next/router";
+import { firestore } from "../../firebase";
 
 export default function BeritaPage() {
   const router = useRouter();
   const { slug } = router.query;
+  console.log(router.query);
+
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    const colRef = firestore.collection("berita").where("slug", "==", "judul-testing");
+
+    colRef.get().then((snapshot) => {
+      const _news = [];
+      snapshot.forEach((doc) => {
+        _news.push(doc.data());
+      });
+
+      setNews(_news[0]);
+    });
+  }, []);
+
+  console.log(news);
 
   return (
     <Container maxW="container.lg" py="10">
@@ -15,7 +35,7 @@ export default function BeritaPage() {
 
       <Box h="300px" bg="gray.300" mb="6"></Box>
 
-      <VStack maxW={{ base: 'full', md: '70%' }} marginX="auto" spacing="4">
+      <VStack maxW={{ base: "full", md: "70%" }} marginX="auto" spacing="4">
         <ReactMarkdown>
           {`
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of **Lorem Ipsum**.
