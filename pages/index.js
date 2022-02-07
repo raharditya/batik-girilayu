@@ -3,7 +3,7 @@ import { Box, Text, Container, Heading, Center } from '@chakra-ui/layout';
 import Head from 'next/head';
 import NewsItem from '../components/NewsItem';
 import { firestore } from '../firebase';
-import { TailSpin } from 'react-loader-spinner';
+import { Spinner } from '@chakra-ui/react';
 
 export default function Home() {
   const [news, setNews] = useState([]);
@@ -57,7 +57,7 @@ export default function Home() {
           ) : (
             <Center py="14">
               <Box textAlign="center">
-                <TailSpin color="#00BFFF" height={80} width={80} />
+                <Spinner size="lg" />
                 <Text mt="4">Loading...</Text>
               </Box>
             </Center>

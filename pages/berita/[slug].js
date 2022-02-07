@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { firestore } from '../../firebase';
 import { Image } from '@chakra-ui/image';
 import { getMonthString } from '../../lib/helpers';
-import { TailSpin } from 'react-loader-spinner';
+import { Spinner } from '@chakra-ui/react';
 
 export default function BeritaPage() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function BeritaPage() {
       {loading ? (
         <Center minH="70vh">
           <Box textAlign="center">
-            <TailSpin color="#00BFFF" height={80} width={80} />
+            <Spinner size="lg" />
             <Text mt="4">Loading...</Text>
           </Box>
         </Center>
