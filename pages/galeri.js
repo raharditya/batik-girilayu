@@ -49,8 +49,6 @@ export default function GaleriPage() {
           </Stack>
         </Box>
       </Container>
-
-      <footer></footer>
     </Box>
   );
 }

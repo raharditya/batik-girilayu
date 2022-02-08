@@ -1,9 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Stack } from '@chakra-ui/react';
-import { Box, Center, Container, Heading } from '@chakra-ui/layout';
+import { Box, Center, Container, Heading, Text } from '@chakra-ui/layout';
 import Head from 'next/head';
 import CatalogueItem from '../components/CatalogueItem';
+import { firestore } from '../firebase';
+import { Spinner } from '@chakra-ui/react';
 
 export default function KatalogPage() {
+  const [catalogues, setCatalogues] = useState([]);
+
+  useEffect(() => {
+    const colRef = firestore.collection('katalog').orderBy('tanggal', 'desc');
+
+    colRef.get().then((snapshot) => {
+      const _news = [];
+      snapshot.forEach((doc) => {
+        _news.push(doc.data());
+      });
+
+      setCatalogues(_news);
+    });
+  }, []);
+
   return (
     <Box bg="gray.50" py="6">
       <Head>
@@ -30,17 +48,26 @@ export default function KatalogPage() {
               </Heading>
             </Center>
             <Box w={{ base: 'full', md: '70%' }}>
-              <CatalogueItem title="Judul Batik 1" price="Rp 300.000" thumbnail="/assets/original/asset-4.jpg">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              </CatalogueItem>
-
-              <CatalogueItem title="Judul Batik 2" price="Rp 300.000" thumbnail="/assets/original/asset-6.jpg">
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-              </CatalogueItem>
-
-              <CatalogueItem title="Judul Batik 3" price="Rp 300.000" thumbnail="/assets/original/asset-3.jpg">
-                scrambled it to make a type specimen book.
-              </CatalogueItem>
+              {catalogues.length ? (
+                catalogues.map((catalogue, idx) => (
+                  <CatalogueItem
+                    path={catalogue.slug}
+                    title={catalogue.judul}
+                    fullPrice={catalogue.hargaPenuh}
+                    price={catalogue.harga}
+                    thumbnail={catalogue.gambar[0].thumbnail}
+                  >
+                    {catalogue.intisari}
+                  </CatalogueItem>
+                ))
+              ) : (
+                <Center py="14">
+                  <Box textAlign="center">
+                    <Spinner size="lg" />
+                    <Text mt="4">Loading...</Text>
+                  </Box>
+                </Center>
+              )}
             </Box>
           </Stack>
         </Box>

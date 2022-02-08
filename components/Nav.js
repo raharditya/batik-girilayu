@@ -60,9 +60,9 @@ export default function Nav() {
             zIndex="20"
             cursor="pointer"
           >
-            <Box w="8" h="1.5" rounded="full" bg="blue.300" className="nav-line line-1"></Box>
-            <Box w="8" h="1.5" rounded="full" bg="blue.300" className="nav-line line-2"></Box>
-            <Box w="8" h="1.5" rounded="full" bg="blue.300" className="nav-line line-3"></Box>
+            <Box w="8" h="1.5" rounded="full" bg="#c28e35" className="nav-line line-1"></Box>
+            <Box w="8" h="1.5" rounded="full" bg="#c28e35" className="nav-line line-2"></Box>
+            <Box w="8" h="1.5" rounded="full" bg="#c28e35" className="nav-line line-3"></Box>
           </VStack>
         </Stack>
       </Container>

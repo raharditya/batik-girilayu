@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Center, Container, Heading, Text, VStack } from '@chakra-ui/layout';
 import ReactMarkdown from 'react-markdown';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { firestore } from '../../firebase';
 import { Image } from '@chakra-ui/image';
@@ -43,27 +44,45 @@ export default function BeritaPage() {
           </Box>
         </Center>
       ) : news?.judul ? (
-        <Container maxW="container.lg" py="10">
-          <Box textAlign="center" mb="6">
-            <Text fontSize="xs">{`${news.tanggal.getDate()} ${getMonthString(
-              news.tanggal.getMonth()
-            )} ${news.tanggal.getFullYear()}`}</Text>
-            <Heading color="#c28e35">{news?.judul}</Heading>
-          </Box>
+        <>
+          <Head>
+            <title>{news.judul} - Batik Girilayu</title>
+            {/* TODO: Fix meta */}
+            <meta name="description" content="Website resmi dari Batik Girilayu" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
 
-          <Image src={news?.gambarUrl} mb="6" maxW={{ base: 'full', md: 'lg' }} mx="auto" />
+          <Container maxW="container.lg" py="10">
+            <Box textAlign="center" mb="6">
+              <Text fontSize="xs">{`${news.tanggal.getDate()} ${getMonthString(
+                news.tanggal.getMonth()
+              )} ${news.tanggal.getFullYear()}`}</Text>
+              <Heading color="#c28e35">{news.judul}</Heading>
+            </Box>
 
-          <VStack maxW={{ base: 'full', md: '70%' }} marginX="auto" spacing="4">
-            <ReactMarkdown>{news?.konten}</ReactMarkdown>
-          </VStack>
-        </Container>
+            <Image src={news?.gambarUrl} mb="6" maxW={{ base: 'full', md: 'lg' }} mx="auto" />
+
+            <VStack maxW={{ base: 'full', md: '70%' }} marginX="auto" spacing="4">
+              <ReactMarkdown>{news.konten}</ReactMarkdown>
+            </VStack>
+          </Container>
+        </>
       ) : (
-        <Center minH="100vh">
-          <Box textAlign="center">
-            <Heading>Berita tidak ditemukan</Heading>
-            <Text>Silahkan kembali ke halaman Beranda kami.</Text>
-          </Box>
-        </Center>
+        <>
+          <Head>
+            <title>Tidak Ditemukan - Batik Girilayu</title>
+            {/* TODO: Fix meta */}
+            <meta name="description" content="Website resmi dari Batik Girilayu" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+
+          <Center minH="60vh">
+            <Box textAlign="center">
+              <Heading>Berita tidak ditemukan</Heading>
+              <Text>Silahkan kembali ke halaman Beranda kami.</Text>
+            </Box>
+          </Center>
+        </>
       )}
     </>
   );
