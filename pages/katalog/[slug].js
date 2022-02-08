@@ -1,73 +1,164 @@
 import { useState, useEffect } from 'react';
-import { Box, Center, Container, Heading, Text, VStack } from '@chakra-ui/layout';
+import { Stack, Button } from '@chakra-ui/react';
+import { Badge, Box, Center, Container, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/layout';
+import { Table, Tbody, Tr, Td } from '@chakra-ui/table';
+import { Spinner } from '@chakra-ui/react';
+import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { firestore } from '../../firebase';
-import { Image } from '@chakra-ui/image';
-import { getMonthString } from '../../lib/helpers';
+import ImageGallery from 'react-image-gallery';
+import { formatCurrency } from '../../lib/helpers';
 
 export default function KatalogPage() {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [news, setNews] = useState({});
+  const [catalogue, setCatalogue] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (slug) {
-      const colRef = firestore.collection('berita').where('slug', '==', slug || '');
+      const colRef = firestore.collection('katalog').where('slug', '==', slug || '');
 
       colRef.get().then((snapshot) => {
-        const _news = [];
+        const _catalogue = [];
         snapshot.forEach((doc) => {
-          const _newsData = doc.data();
-          _newsData['tanggal'] = new Date(_newsData.tanggal.seconds * 1000);
+          const _catalogueData = doc.data();
+          _catalogueData['tanggal'] = new Date(_catalogueData.tanggal.seconds * 1000);
+          _catalogueData['konten'] = _catalogueData.konten.split('\\n');
+          console.log(_catalogueData['konten']);
 
-          _news.push(_newsData);
+          _catalogue.push(_catalogueData);
         });
 
-        setNews(_news[0]);
+        setCatalogue(_catalogue[0]);
         setLoading(false);
       });
     }
   }, [slug]);
 
+  const calculateDiscountPercentage = () => {
+    let discountPercentage = 0;
+    if (catalogue.hargaPenuh) {
+      discountPercentage = Math.round((catalogue.harga / catalogue.hargaPenuh) * 100);
+    }
+
+    return discountPercentage;
+  };
+
   return (
-    <>
-      {/* {loading ? (
-        <Center minH="100vh">
+    <Box bg="gray.50" py="6">
+      {loading ? (
+        <Center minH="70vh">
           <Box textAlign="center">
-            <Heading>Loading...</Heading>
-            <Text>Mohon tunggu beberapa saat.</Text>
+            <Spinner size="lg" />
+            <Text mt="4">Loading...</Text>
           </Box>
         </Center>
-      ) : news?.judul ? ( */}
-      <Container maxW="container.lg" py="10">
-        <Box textAlign="center" mb="6">
-          <Heading color="#c28e35">Judul Nama Batik</Heading>
-        </Box>
+      ) : catalogue?.judul ? (
+        <>
+          <Head>
+            <title>{catalogue.judul} - Batik Girilayu</title>
+            {/* TODO: Fix meta */}
+            <meta name="description" content="Website resmi dari Batik Girilayu" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
 
-        {/* <Image src={news?.gambarUrl} mb="6" maxW={{ base: 'full', md: 'lg' }} mx="auto" /> */}
+          <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
+            <Box as="main">
+              <Stack direction={{ base: 'column', md: 'row' }} spacing="6" alignItems="flex-start">
+                <Box w={{ base: 'full', md: '30%' }} pos={{ base: 'static', md: 'sticky' }} top="calc(70px + 1.5rem)">
+                  <ImageGallery showFullscreenButton={false} showPlayButton={false} items={catalogue.gambar} />
+                </Box>
+                <Box w={{ base: 'full', md: '70%' }} bg="white" rounded="xl" borderWidth="1px" p="4">
+                  <Heading as="h1" fontSize="2xl" mb="2" color="#c28e35">
+                    {catalogue.judul}
+                  </Heading>
 
-        <VStack maxW={{ base: 'full', md: '70%' }} marginX="auto" spacing="4">
-          <ReactMarkdown>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
-            Aldus PageMaker including versions of **Lorem Ipsum**.
-          </ReactMarkdown>
-        </VStack>
-      </Container>
-      {/* ) : (
-        <Center minH="100vh">
-          <Box textAlign="center">
-            <Heading>Katalog tidak ditemukan</Heading>
-            <Text>Silahkan kembali ke halaman Beranda kami.</Text>
-          </Box>
-        </Center>
-      )} */}
-    </>
+                  {catalogue.hargaPenuh ? (
+                    <Text textDecor="line-through" fontSize="xs">
+                      {formatCurrency(catalogue.hargaPenuh)}
+                    </Text>
+                  ) : null}
+                  <Text fontWeight="bold">
+                    {formatCurrency(catalogue.harga)}{' '}
+                    {catalogue.hargaPenuh ? (
+                      <Badge colorScheme="green">Diskon {calculateDiscountPercentage()}%</Badge>
+                    ) : null}
+                  </Text>
+
+                  <HStack mt="4">
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faEnvelope} height="1.2rem" />}
+                      colorScheme="orange"
+                      variant="outline"
+                      size="lg"
+                    >
+                      Chat
+                    </Button>
+                    <Button
+                      leftIcon={<FontAwesomeIcon icon={faShoppingCart} height="1.2rem" />}
+                      colorScheme="orange"
+                      size="lg"
+                    >
+                      Beli Sekarang
+                    </Button>
+                  </HStack>
+
+                  <Heading fontSize="lg" mt="6">
+                    Detail
+                  </Heading>
+                  <Table variant="unstyled" size="sm" maxW="xs" mt="1">
+                    <Tbody>
+                      {catalogue.detail.map((d, idx) => (
+                        <Tr key={idx * 200}>
+                          <Td px="0" py="1">
+                            {d.judul}
+                          </Td>
+                          <Td px="0" py="1">
+                            :
+                          </Td>
+                          <Td px="0" py="1">
+                            {d.konten}
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+
+                  <Heading fontSize="lg" mt="4" mb="1">
+                    Deksripsi
+                  </Heading>
+                  <VStack spacing="3">
+                    {catalogue.konten.map((k, idx) => (
+                      <ReactMarkdown key={idx * 1000}>{k}</ReactMarkdown>
+                    ))}
+                  </VStack>
+                </Box>
+              </Stack>
+            </Box>
+          </Container>
+        </>
+      ) : (
+        <>
+          <Head>
+            <title>Tidak Ditemukan - Batik Girilayu</title>
+            {/* TODO: Fix meta */}
+            <meta name="description" content="Website resmi dari Batik Girilayu" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+
+          <Center minH="60vh">
+            <Box textAlign="center">
+              <Heading>Katalog tidak ditemukan</Heading>
+              <Text>Silahkan kembali ke halaman Beranda kami.</Text>
+            </Box>
+          </Center>
+        </>
+      )}
+    </Box>
   );
 }
