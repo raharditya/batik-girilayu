@@ -17,7 +17,7 @@ export default function Nav() {
         <Stack direction="row" h="70px" justifyContent="space-between" alignItems="center">
           <Link href="/" passHref>
             <Box as="a">
-              <Image src="/assets/logo.png" height="12" pos="relative" zIndex="20" />
+              <Image src="/assets/logo.png" height="12" pos="relative" zIndex="20" alt="" />
             </Box>
           </Link>
 

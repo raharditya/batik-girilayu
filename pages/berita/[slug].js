@@ -60,7 +60,7 @@ export default function BeritaPage() {
               <Heading color="#c28e35">{news.judul}</Heading>
             </Box>
 
-            <Image src={news?.gambarUrl} mb="6" maxW={{ base: 'full', md: 'lg' }} mx="auto" />
+            <Image src={news?.gambarUrl} mb="6" maxW={{ base: 'full', md: 'lg' }} mx="auto" alt="" />
 
             <VStack maxW={{ base: 'full', md: '70%' }} marginX="auto" spacing="4">
               <ReactMarkdown>{news.konten}</ReactMarkdown>

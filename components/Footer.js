@@ -27,7 +27,7 @@ export const Footer = ({ homeUrl = '/', brand, question, navItems, socialMedia, 
       <Container py="8" maxW="container.xl">
         <Stack direction={{ base: 'column', md: 'row' }}>
           <Box>
-            <Image src="/assets/logo.png" height="12" mb="6" />
+            <Image src="/assets/logo.png" height="12" mb="6" alt="" />
 
             <HStack spacing="4" alignItems="center" mb="4">
               {sosmed.map((item, idx) => {

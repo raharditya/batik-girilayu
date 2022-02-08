@@ -51,6 +51,7 @@ export default function KatalogPage() {
               {catalogues.length ? (
                 catalogues.map((catalogue, idx) => (
                   <CatalogueItem
+                    key={idx * -100}
                     path={catalogue.slug}
                     title={catalogue.judul}
                     fullPrice={catalogue.hargaPenuh}
