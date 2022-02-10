@@ -3,7 +3,7 @@ import { Stack } from '@chakra-ui/react';
 import { Box, Center, Container, Heading, Text } from '@chakra-ui/layout';
 import Head from 'next/head';
 import CatalogueItem from '../components/CatalogueItem';
-import { firestore } from '../firebase';
+import { firestore } from '../services/firebase';
 import { Spinner } from '@chakra-ui/react';
 
 export default function KatalogPage() {
@@ -27,7 +27,7 @@ export default function KatalogPage() {
       <Head>
         <title>Katalog - Batik Girilayu</title>
         <meta name="description" content="Website resmi dari Batik Girilayu" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo192.png" />
       </Head>
 
       <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>

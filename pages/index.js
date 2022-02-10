@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { Box, Text, Container, Heading, Center } from '@chakra-ui/layout';
 import Head from 'next/head';
 import NewsItem from '../components/NewsItem';
-import { firestore } from '../firebase';
+import { firestore } from '../services/firebase';
 import { Spinner } from '@chakra-ui/react';
 
 export default function Home() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const colRef = firestore.collection('berita').orderBy('tanggal', 'desc');
+    const colRef = firestore.collection('berita').orderBy('publishTime', 'desc');
 
     colRef.get().then((snapshot) => {
       const _news = [];
@@ -26,7 +26,7 @@ export default function Home() {
       <Head>
         <title>Batik Girilayu</title>
         <meta name="description" content="Website resmi dari Batik Girilayu" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo192.png" />
       </Head>
 
       <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
@@ -48,10 +48,10 @@ export default function Home() {
             news.map((newsItem, idx) => (
               <NewsItem
                 key={idx * 100}
-                title={newsItem.judul}
+                title={newsItem.title}
                 path={newsItem.slug}
-                thumbnail={newsItem.gambarUrl}
-                excerpt={newsItem.intisari}
+                thumbnail={newsItem.imgUrl}
+                excerpt={newsItem.excerpt}
               />
             ))
           ) : (

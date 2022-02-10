@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { firestore } from '../../firebase';
+import { firestore } from '../../services/firebase';
 import ImageGallery from 'react-image-gallery';
 import { formatCurrency } from '../../lib/helpers';
 
@@ -29,7 +29,6 @@ export default function KatalogPage() {
           const _catalogueData = doc.data();
           _catalogueData['tanggal'] = new Date(_catalogueData.tanggal.seconds * 1000);
           _catalogueData['konten'] = _catalogueData.konten.split('\\n');
-          console.log(_catalogueData['konten']);
 
           _catalogue.push(_catalogueData);
         });
@@ -62,9 +61,8 @@ export default function KatalogPage() {
         <>
           <Head>
             <title>{catalogue.judul} - Batik Girilayu</title>
-            {/* TODO: Fix meta */}
             <meta name="description" content="Website resmi dari Batik Girilayu" />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/logo192.png" />
           </Head>
 
           <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
@@ -146,7 +144,6 @@ export default function KatalogPage() {
         <>
           <Head>
             <title>Tidak Ditemukan - Batik Girilayu</title>
-            {/* TODO: Fix meta */}
             <meta name="description" content="Website resmi dari Batik Girilayu" />
             <link rel="icon" href="/favicon.ico" />
           </Head>

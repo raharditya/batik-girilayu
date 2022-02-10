@@ -8,7 +8,7 @@ export default function AboutPage() {
       <Head>
         <title>Tentang Kami - Batik Girilayu</title>
         <meta name="description" content="Website resmi dari Batik Girilayu" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo192.png" />
       </Head>
 
       <Container maxW="container.xl" color="gray.700" fontSize={{ base: 'sm', lg: 'md' }}>
